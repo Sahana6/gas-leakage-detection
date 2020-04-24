@@ -1,0 +1,41 @@
+#include <Servo.h>
+#include <LiquidCrystal.h> 
+LiquidCrystal lcd(2,3,4,5,6,7); 
+{ 
+Serial.begin(9600); 
+pinMode(A1, INPUT); 
+}
+int led = 12; 
+int Gassensor = A1; 
+Servo myservo; 
+int pos = 0; 
+void setup()
+{ 
+pinMode(led,OUTPUT); 
+Serial.begin(9600); 
+myservo.attach(10); 
+lcd.begin(16, 2); 
+lcd.print("LPG Gas Leakage    ");
+lcd.setCursor(0, 1); 
+}
+void loop()
+{
+int sensorValue = analogRead(Gassensor);
+
+Serial.println(sensorValue);
+delay(15);   
+if(sensorValue > 380) 
+{ 
+lcd.setCursor(0, 2); 
+lcd.print("Detected       ");
+digitalWrite(led,HIGH); 
+myservo.write(20);     
+} 
+else if (sensorValue < 380) 
+{ 
+lcd.setCursor(0, 2); 
+lcd.print("Not Detected      ");
+digitalWrite(led,LOW); 
+myservo.write(160);
+} 
+}
