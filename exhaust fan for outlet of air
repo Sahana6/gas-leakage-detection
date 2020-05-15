@@ -1,0 +1,26 @@
+int buzzer = 13;    
+int GASA0 = A0;     
+int fan = 2;          
+
+void setup()
+{
+  pinMode(buzzer, OUTPUT);
+  pinMode(fan, OUTPUT);
+}
+
+void loop() 
+{
+  int analogSensor = analogRead(GASA0);
+  // Checks if it has reached the threshold value
+  if (analogSensor >= 75)               
+  {
+    digitalWrite(fan, HIGH);
+    tone(buzzer, 1000, 200);
+  }
+  else
+  {
+    digitalWrite(fan, LOW);
+    noTone(buzzer);
+  }
+  delay(500);
+}
